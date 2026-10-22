@@ -1,4 +1,4 @@
-import type { Notification } from "@/models/Notification";
+import type { Notification } from "@/models/notification.model";
 
 export const notifications: Notification[] = [
   {

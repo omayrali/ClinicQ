@@ -1,4 +1,4 @@
-import type { Appointment } from "@/models/Appointment";
+import type { Appointment } from "@/models/appointment.model";
 
 export const appointments: Appointment[] = [
   {

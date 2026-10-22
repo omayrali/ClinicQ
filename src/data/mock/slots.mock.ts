@@ -1,4 +1,4 @@
-import type { Slot } from "@/models/Slot";
+import type { Slot } from "@/models/slot.model";
 
 // Slot id format: <doctorId>_<date>_<startTime>
 export const slots: Slot[] = [

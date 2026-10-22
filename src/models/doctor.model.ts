@@ -6,6 +6,6 @@ export interface Doctor {
   photoKey?: string;
   consultationFee: number;
   yearsOfExperience: number;
-  location: string;
+  clinicId: string;
   rating?: number;
 }

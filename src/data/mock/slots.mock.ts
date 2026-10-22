@@ -1,6 +1,5 @@
 import type { Slot } from "@/models/slot.model";
 
-// Slot id format: <doctorId>_<date>_<startTime>
 export const slots: Slot[] = [
   {
     id: "d1_2026-10-18_09:00",

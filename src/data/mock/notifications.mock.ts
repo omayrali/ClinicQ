@@ -29,7 +29,7 @@ export const notifications: Notification[] = [
     appointmentId: "a1",
     type: "reminder",
     title: "Upcoming appointment",
-    message: "Reminder: Dr. Ahmed Hassan tomorrow at 09:00, Room 101.",
+    message: "Reminder: Dr. Ahmed Hassan tomorrow at 09:00, Maadi.",
     isRead: false,
     createdAt: "2026-11-21T09:00:00Z",
   },

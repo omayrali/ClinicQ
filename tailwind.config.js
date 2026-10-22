@@ -1,4 +1,10 @@
-const { colors, fonts } = require("./src/theme/tokens.ts");
+const {
+  colors,
+  fonts,
+  spacing,
+  radius,
+  fontSize,
+} = require("./src/theme/tokens.ts");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -7,6 +13,9 @@ module.exports = {
   theme: {
     extend: {
       colors,
+      spacing,
+      borderRadius: radius,
+      fontSize,
       fontFamily: {
         inter: [fonts.regular],
         "inter-medium": [fonts.medium],

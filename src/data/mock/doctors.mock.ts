@@ -8,7 +8,7 @@ export const doctors: Doctor[] = [
     bio: "Consultant cardiologist focused on heart disease prevention and follow-up care.",
     consultationFee: 600,
     yearsOfExperience: 15,
-    location: "Maadi",
+    clinicId: "c1",
     rating: 4.8,
   },
   {
@@ -18,7 +18,7 @@ export const doctors: Doctor[] = [
     bio: "Treats skin, hair and nail conditions for adults and teenagers.",
     consultationFee: 450,
     yearsOfExperience: 9,
-    location: "Zamalek",
+    clinicId: "c2",
     rating: 4.6,
   },
   {
@@ -28,7 +28,7 @@ export const doctors: Doctor[] = [
     bio: "Child health from newborns to teens, including routine checkups.",
     consultationFee: 400,
     yearsOfExperience: 12,
-    location: "Al Mohandessin",
+    clinicId: "c3",
     rating: 4.9,
   },
   {
@@ -38,7 +38,7 @@ export const doctors: Doctor[] = [
     bio: "Bone, joint and sports injury specialist.",
     consultationFee: 550,
     yearsOfExperience: 7,
-    location: "Heliopolis",
+    clinicId: "c4",
     rating: 4.4,
   },
   {
@@ -48,7 +48,7 @@ export const doctors: Doctor[] = [
     bio: "General dentistry, cleanings and fillings.",
     consultationFee: 350,
     yearsOfExperience: 5,
-    location: "Nasr City",
+    clinicId: "c5",
   },
   {
     id: "d6",
@@ -57,7 +57,7 @@ export const doctors: Doctor[] = [
     bio: "Ear, nose and throat conditions, including allergies and sinus problems.",
     consultationFee: 500,
     yearsOfExperience: 11,
-    location: "El Mostakbal City",
+    clinicId: "c6",
     rating: 4.7,
   },
 ];

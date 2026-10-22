@@ -1,4 +1,4 @@
-import type { User } from "@/models/User";
+import type { User } from "@/models/user.model";
 
 export const users: User[] = [
   {
@@ -6,6 +6,7 @@ export const users: User[] = [
     name: "Omar Khaled",
     email: "omar.khaled@example.com",
     phone: "01012345678",
+    password: "Patient123",
     role: "patient",
   },
   {
@@ -13,6 +14,7 @@ export const users: User[] = [
     name: "Nour Ibrahim",
     email: "nour.ibrahim@example.com",
     phone: "01123456789",
+    password: "Patient123",
     role: "patient",
   },
   {
@@ -20,13 +22,62 @@ export const users: User[] = [
     name: "Hana Tarek",
     email: "hana.tarek@example.com",
     phone: "01234567890",
+    password: "Patient123",
     role: "patient",
   },
+
   {
     id: "s1",
-    name: "Reception Desk",
-    email: "staff@clinicq.example.com",
-    phone: "0221234567",
+    name: "Mariam Fathy",
+    email: "staff.c1@clinicq.example.com",
+    phone: "0225001001",
+    password: "Staff123",
     role: "staff",
+    clinicId: "c1",
+  },
+  {
+    id: "s2",
+    name: "Ali Mahmoud",
+    email: "staff.c2@clinicq.example.com",
+    phone: "0225001002",
+    password: "Staff123",
+    role: "staff",
+    clinicId: "c2",
+  },
+  {
+    id: "s3",
+    name: "Dina Samir",
+    email: "staff.c3@clinicq.example.com",
+    phone: "0225001003",
+    password: "Staff123",
+    role: "staff",
+    clinicId: "c3",
+  },
+  {
+    id: "s4",
+    name: "Hassan Reda",
+    email: "staff.c4@clinicq.example.com",
+    phone: "0225001004",
+    password: "Staff123",
+    role: "staff",
+    clinicId: "c4",
+  },
+  {
+    id: "s5",
+    name: "Rana Ashraf",
+    email: "staff.c5@clinicq.example.com",
+    phone: "0225001005",
+    password: "Staff123",
+    role: "staff",
+    clinicId: "c5",
+  },
+  {
+    id: "s6",
+    name: "Tamer Wael",
+    email: "staff.c6@clinicq.example.com",
+    phone: "0225001006",
+    password: "Staff123",
+    role: "staff",
+    clinicId: "c6",
   },
 ];

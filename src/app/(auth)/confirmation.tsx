@@ -1,11 +1,11 @@
-import { AppText } from "@/components/ui/AppText";
+import { Text } from "@/components/ui/text";
 import { Header } from "@/components/ui/Header";
 import { Screen } from "@/components/ui/Screen";
 
 export default function Confirmation() {
   return (
     <Screen header={<Header title="Confirmation" showBack={false} />}>
-      <AppText className="pt-md">Confirmation screen</AppText>
+      <Text className="pt-md">Confirmation screen</Text>
     </Screen>
   );
 }

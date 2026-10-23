@@ -1,4 +1,4 @@
-import { AppText } from "@/components/ui/AppText";
+import { Text } from "@/components/ui/text";
 import { Header } from "@/components/ui/Header";
 import { Screen } from "@/components/ui/Screen";
 import { useLocalSearchParams } from "expo-router";
@@ -8,7 +8,7 @@ export default function BookAppointment() {
 
   return (
     <Screen header={<Header title="Book Appointment" />}>
-      <AppText className="pt-md">Book Appointment screen: {doctorId}</AppText>
+      <Text className="pt-md">Book Appointment screen: {doctorId}</Text>
     </Screen>
   );
 }

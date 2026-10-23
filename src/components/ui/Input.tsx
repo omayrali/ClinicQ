@@ -1,80 +1,29 @@
-import { colors } from "@/theme/tokens";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { useState } from "react";
-import { Pressable, TextInput, View, type TextInputProps } from "react-native";
-import { AppText } from "./AppText";
-import type { IconName } from "./IconButton";
+import { cn } from '@/lib/utils';
+import { Platform, TextInput } from 'react-native';
 
-type InputProps = Omit<TextInputProps, "className"> & {
-  label?: string;
-  icon?: IconName;
-  error?: string;
-  className?: string;
-};
-
-export function Input({
-  label,
-  icon,
-  error,
-  secureTextEntry,
-  className = "",
-  ...rest
-}: InputProps) {
-  const [hidden, setHidden] = useState(true);
-  const [focused, setFocused] = useState(false);
-
-  const border = error
-    ? "border-danger"
-    : focused
-      ? "border-primary"
-      : "border-border";
-
+function Input({ className, ...props }: React.ComponentProps<typeof TextInput> & React.RefAttributes<TextInput>) {
   return (
-    <View className={`gap-xs ${className}`}>
-      {label ? <AppText variant="label">{label}</AppText> : null}
-
-      <View
-        className={`h-12 flex-row items-center gap-sm rounded-sm border bg-surface px-md ${border}`}
-      >
-        {icon ? <Ionicons name={icon} size={20} color={colors.muted} /> : null}
-
-        <TextInput
-          className="flex-1 font-inter text-md text-text"
-          placeholderTextColor={colors.placeholder}
-          secureTextEntry={secureTextEntry && hidden}
-          accessibilityLabel={label}
-          onFocus={(e) => {
-            setFocused(true);
-            rest.onFocus?.(e);
-          }}
-          onBlur={(e) => {
-            setFocused(false);
-            rest.onBlur?.(e);
-          }}
-          {...rest}
-        />
-
-        {secureTextEntry ? (
-          <Pressable
-            onPress={() => setHidden((h) => !h)}
-            accessibilityRole="button"
-            accessibilityLabel={hidden ? "Show password" : "Hide password"}
-            hitSlop={8}
-          >
-            <Ionicons
-              name={hidden ? "eye-off-outline" : "eye-outline"}
-              size={20}
-              color={colors.muted}
-            />
-          </Pressable>
-        ) : null}
-      </View>
-
-      {error ? (
-        <AppText variant="caption" tone="danger">
-          {error}
-        </AppText>
-      ) : null}
-    </View>
+    <TextInput
+      className={cn(
+        'dark:bg-input/30 border-input bg-background text-foreground flex h-10 w-full min-w-0 flex-row items-center rounded-md border px-3 py-1 text-base leading-5 shadow-sm shadow-black/5 sm:h-9',
+        props.editable === false &&
+        cn(
+          'opacity-50',
+          Platform.select({ web: 'disabled:pointer-events-none disabled:cursor-not-allowed' })
+        ),
+        Platform.select({
+          web: cn(
+            'placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground outline-none transition-[color,box-shadow] md:text-sm',
+            'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+            'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive'
+          ),
+          native: 'placeholder:text-muted-foreground/50',
+        }),
+        className
+      )}
+      {...props}
+    />
   );
 }
+
+export { Input };

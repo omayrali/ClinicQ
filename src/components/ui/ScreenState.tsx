@@ -1,9 +1,11 @@
+import { Button } from "@/components/ui/button";
+import { Text } from "@/components/ui/text";
 import { colors } from "@/theme/tokens";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import type { ComponentProps } from "react";
 import { ActivityIndicator, View } from "react-native";
-import { AppButton } from "./AppButton";
-import { AppText } from "./AppText";
-import type { IconName } from "./IconButton";
+
+type IconName = ComponentProps<typeof Ionicons>["name"];
 
 type ScreenStateProps =
   | { type: "loading"; message?: string }
@@ -22,7 +24,7 @@ export function ScreenState(props: ScreenStateProps) {
       <View className="flex-1 items-center justify-center gap-md p-lg">
         <ActivityIndicator size="large" color={colors.primary} />
         {props.message ? (
-          <AppText variant="caption">{props.message}</AppText>
+          <Text className="text-sm text-subtext">{props.message}</Text>
         ) : null}
       </View>
     );
@@ -44,24 +46,23 @@ export function ScreenState(props: ScreenStateProps) {
         />
       </View>
 
-      <AppText variant="heading" className="text-center">
+      <Text className="text-center font-inter-semibold text-lg">
         {props.title}
-      </AppText>
+      </Text>
 
       {props.message ? (
-        <AppText variant="body" tone="subtext" className="text-center">
-          {props.message}
-        </AppText>
+        <Text className="text-center text-md text-subtext">{props.message}</Text>
       ) : null}
 
       {props.actionLabel && props.onAction ? (
-        <AppButton
-          title={props.actionLabel}
-          onPress={props.onAction}
+        <Button
           variant="outline"
-          size="small"
+          size="sm"
           className="mt-md"
-        />
+          onPress={props.onAction}
+        >
+          <Text>{props.actionLabel}</Text>
+        </Button>
       ) : null}
     </View>
   );

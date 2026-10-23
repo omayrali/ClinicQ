@@ -8,6 +8,7 @@ import {
 import "../../global.css";
 
 import { SessionProvider, useSession } from "@/context/SessionContext";
+import { PortalHost } from "@rn-primitives/portal";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
@@ -55,6 +56,7 @@ export default function RootLayout() {
   return (
     <SessionProvider>
       <RootNavigator />
+      <PortalHost />
     </SessionProvider>
   );
 }

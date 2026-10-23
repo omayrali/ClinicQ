@@ -50,18 +50,46 @@ export async function register(
   return { ...user };
 }
 
-export async function resetPassword(
-  email: string,
-  currentPassword: string,
-  newPassword: string,
-): Promise<void> {
-  const user = findUserByEmail(email);
+const MOCK_OTP = "123456";
+const pendingResets = new Map<string, { code: string; verified: boolean }>();
 
-  if (!user || user.password !== currentPassword) {
+const key = (email: string) => email.trim().toLowerCase();
+
+export async function requestPasswordReset(email: string): Promise<void> {
+  if (!findUserByEmail(email)) {
     throw new Error("No account found with this email");
   }
 
+  pendingResets.set(key(email), { code: MOCK_OTP, verified: false });
+}
+
+export async function verifyOtp(email: string, code: string): Promise<void> {
+  const reset = pendingResets.get(key(email));
+
+  if (!reset) {
+    throw new Error("No reset request found. Please request a new code");
+  }
+
+  if (reset.code !== code.trim()) {
+    throw new Error("Incorrect code");
+  }
+
+  reset.verified = true;
+}
+
+export async function resetPassword(
+  email: string,
+  newPassword: string,
+): Promise<void> {
+  const reset = pendingResets.get(key(email));
+  const user = findUserByEmail(email);
+
+  if (!reset?.verified || !user) {
+    throw new Error("Please verify your code first");
+  }
+
   user.password = newPassword;
+  pendingResets.delete(key(email));
 }
 
 export async function getUserById(id: string): Promise<User> {

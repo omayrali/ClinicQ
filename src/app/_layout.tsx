@@ -7,6 +7,7 @@ import {
 } from "@expo-google-fonts/inter";
 import "../../global.css";
 
+import { SessionProvider } from "@/context/SessionContext";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
@@ -31,5 +32,9 @@ export default function RootLayout() {
     return null;
   }
 
-  return <Stack />;
+  return (
+    <SessionProvider>
+      <Stack />
+    </SessionProvider>
+  );
 }

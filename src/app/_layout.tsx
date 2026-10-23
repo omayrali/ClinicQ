@@ -34,7 +34,7 @@ export default function RootLayout() {
 
   return (
     <SessionProvider>
-      <Stack />
+      <Stack screenOptions={{ headerShown: false }} />
     </SessionProvider>
   );
 }

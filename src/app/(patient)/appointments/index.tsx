@@ -4,7 +4,7 @@ import { Screen } from "@/components/ui/Screen";
 
 export default function Appointments() {
   return (
-    <Screen header={<Header title="Appointments" showBack={false} />} edges={["top"]}>
+    <Screen header={<Header title="My Appointments" />}>
       <Text className="pt-md">Appointments screen</Text>
     </Screen>
   );

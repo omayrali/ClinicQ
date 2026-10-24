@@ -13,20 +13,20 @@ export default function PatientTabs() {
       }}
     >
       <Tabs.Screen
-        name="doctors"
+        name="home"
         options={{
-          title: "Doctors",
+          title: "Home",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="medkit-outline" size={size} color={color} />
+            <Ionicons name="home-outline" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="appointments"
+        name="search"
         options={{
-          title: "Appointments",
+          title: "Search",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="calendar-outline" size={size} color={color} />
+            <Ionicons name="search-outline" size={size} color={color} />
           ),
         }}
       />

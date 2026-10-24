@@ -7,6 +7,6 @@ export default function Index() {
   if (!user) return <Redirect href="/welcome" />;
 
   return (
-    <Redirect href={user.role === "staff" ? "/appointments" : "/doctors"} />
+    <Redirect href={user.role === "staff" ? "/dashboard" : "/home"} />
   );
 }

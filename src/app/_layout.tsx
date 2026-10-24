@@ -16,7 +16,18 @@ import { useEffect } from "react";
 SplashScreen.preventAutoHideAsync();
 
 function RootNavigator() {
-  const { user } = useSession();
+  const { user, isLoading } = useSession();
+
+  // Keep the splash screen up until we know if someone is logged in.
+  useEffect(() => {
+    if (!isLoading) {
+      SplashScreen.hideAsync();
+    }
+  }, [isLoading]);
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
@@ -42,12 +53,6 @@ export default function RootLayout() {
     Inter_600SemiBold,
     Inter_700Bold,
   });
-
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, error]);
 
   if (!loaded && !error) {
     return null;

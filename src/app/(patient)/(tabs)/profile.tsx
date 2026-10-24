@@ -1,11 +1,5 @@
-import { Text } from "@/components/ui/text";
-import { Header } from "@/components/ui/Header";
-import { Screen } from "@/components/ui/Screen";
+import { ProfileScreen } from "@/features/profile/screens/ProfileScreen";
 
 export default function Profile() {
-  return (
-    <Screen header={<Header title="Profile" showBack={false} />} edges={["top"]}>
-      <Text className="pt-md">Profile screen</Text>
-    </Screen>
-  );
+  return <ProfileScreen />;
 }

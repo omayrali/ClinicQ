@@ -1,5 +1,5 @@
 import { Pressable, View } from "react-native";
-import { AppText } from "./AppText";
+import { Text } from "@/components/ui/text";
 
 type DayPillProps = {
   dayName: string;
@@ -33,18 +33,17 @@ export function DayPill({
       accessibilityState={{ selected, disabled }}
       className={`w-12 items-center gap-xs rounded-pill border py-sm active:opacity-70 ${pill}`}
     >
-      <AppText
-        variant="label"
-        tone={disabled ? "muted" : selected ? "primary" : "text"}
+      <Text
+        className={`font-inter-medium text-md ${
+          disabled ? "text-muted" : selected ? "text-primary" : "text-text"
+        }`}
       >
         {dayName}
-      </AppText>
+      </Text>
       <View
         className={`h-6 w-6 items-center justify-center rounded-pill ${circle}`}
       >
-        <AppText variant="caption" tone="white">
-          {dayNumber}
-        </AppText>
+        <Text className="text-sm text-white">{dayNumber}</Text>
       </View>
     </Pressable>
   );

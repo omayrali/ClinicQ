@@ -1,8 +1,10 @@
+import { Button } from "@/components/ui/button";
+import { Text } from "@/components/ui/text";
+import { colors } from "@/theme/tokens";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import type { ReactNode } from "react";
 import { View } from "react-native";
-import { AppText } from "./AppText";
-import { IconButton } from "./IconButton";
 
 type HeaderProps = {
   title: string;
@@ -18,22 +20,26 @@ export function Header({ title, showBack, right }: HeaderProps) {
     <View className="flex-row items-center justify-between border-b border-border bg-surface px-md py-sm">
       <View className="w-11">
         {canGoBack ? (
-          <IconButton
-            icon="chevron-back"
+          <Button
+            variant="outline"
+            size="icon"
+            className="rounded-full"
             accessibilityLabel="Go back"
+            hitSlop={8}
             onPress={() => router.back()}
-          />
+          >
+            <Ionicons name="chevron-back" size={20} color={colors.text} />
+          </Button>
         ) : null}
       </View>
 
-      <AppText
-        variant="title"
-        className="flex-1 text-center"
+      <Text
+        className="flex-1 text-center font-inter-semibold text-xl"
         numberOfLines={1}
         accessibilityRole="header"
       >
         {title}
-      </AppText>
+      </Text>
 
       <View className="w-11 items-end">{right}</View>
     </View>

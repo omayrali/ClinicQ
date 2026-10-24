@@ -11,6 +11,20 @@ export const colors = {
   success: "#43A047",
   warning: "#FBC02D",
   danger: "#E53935",
+
+  // Names the library components (button, card, ...) look for
+  foreground: "#151515",
+  "primary-foreground": "#FFFFFF",
+  secondary: "#F5F5F5",
+  "secondary-foreground": "#151515",
+  "muted-foreground": "#7D7D7D",
+  accent: "#E1EEFB",
+  "accent-foreground": "#172D78",
+  destructive: "#E53935",
+  card: "#FFFFFF",
+  "card-foreground": "#151515",
+  input: "#E2E2E2",
+  ring: "#2D59F0",
 } as const;
 
 export const spacing = { xs: 4, sm: 8, md: 16, lg: 24, xl: 32 } as const;

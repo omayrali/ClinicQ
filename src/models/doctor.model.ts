@@ -3,7 +3,8 @@ export interface Doctor {
   name: string;
   specialty: string;
   bio: string;
-  photoKey?: string;
+  motto?: string;
+  photoUrl?: string;
   consultationFee: number;
   yearsOfExperience: number;
   clinicId: string;

@@ -25,6 +25,14 @@ export const users: User[] = [
     password: "Patient123",
     role: "patient",
   },
+  {
+    id: "p4",
+    name: "Omayr Ali",
+    email: "omayr@gmail.com",
+    phone: "01234567890",
+    password: "omayr",
+    role: "patient",
+  },
 
   {
     id: "s1",
@@ -79,5 +87,14 @@ export const users: User[] = [
     password: "Staff123",
     role: "staff",
     clinicId: "c6",
+  },
+  {
+    id: "s7",
+    name: "Omayr Ali",
+    email: "omayr@gmail.com",
+    phone: "0225001006",
+    password: "omayr",
+    role: "staff",
+    clinicId: "c7",
   },
 ];

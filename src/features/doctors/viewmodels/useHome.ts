@@ -1,10 +1,11 @@
 import { useSession } from "@/context/SessionContext";
 import { getDoctors } from "@/data/repositories/doctor.repo";
 import { getNotifications } from "@/data/repositories/notification.repo";
+import { getAppointmentsByPatient } from "@/data/repositories/appointment.repo";
 import {
-  getAppointmentViews,
+  getAppointmentView,
   type AppointmentView,
-} from "@/features/appointments/viewmodels/getAppointmentViews";
+} from "@/features/appointments/viewmodels/appointmentView";
 import type { Doctor } from "@/models/doctor.model";
 import type { Notification } from "@/models/notification.model";
 import { useEffect, useState } from "react";
@@ -23,7 +24,8 @@ export function useHome() {
     async function loadData() {
       try {
         setDoctors(await getDoctors());
-        setAppointments(await getAppointmentViews(userId));
+        const patientAppointments = await getAppointmentsByPatient(userId);
+        setAppointments(await Promise.all(patientAppointments.map(getAppointmentView)));
         setNotifications(await getNotifications(userId));
       } catch {
         setError(true);

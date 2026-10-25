@@ -1,5 +1,5 @@
 import { Text } from "@/components/ui/text";
-import type { AppointmentView } from "@/features/appointments/viewmodels/getAppointmentViews";
+import type { AppointmentView } from "@/features/appointments/viewmodels/appointmentView";
 import { colors } from "@/theme/tokens";
 import { formatDate, formatTime } from "@/utils/dateFormat";
 import Ionicons from "@expo/vector-icons/Ionicons";

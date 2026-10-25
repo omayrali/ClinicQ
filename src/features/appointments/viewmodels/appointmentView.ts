@@ -14,7 +14,7 @@ export interface AppointmentView {
   doctorName: string;
   doctorPhotoKey?: string;
   specialty: string;
-  consultationFee: number;
+  consultationFee: number; 
   clinicName: string;
   clinicAddress: string;
   clinicPhone?: string;

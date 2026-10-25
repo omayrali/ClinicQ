@@ -19,9 +19,9 @@ export function DoctorPhoto({
     <View
       className={`items-center justify-center overflow-hidden bg-secondary ${className}`}
     >
-      {doctor.photoUrl ? (
+      {doctor.photoKey ? (
         <Image
-          source={{ uri: doctor.photoUrl }}
+          source={{ uri: doctor.photoKey }}
           style={{ width: "100%", height: "100%" }}
           cachePolicy="none"
           contentFit="cover"

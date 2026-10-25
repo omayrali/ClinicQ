@@ -4,7 +4,7 @@ export const doctors: Doctor[] = [
   {
     id: "d1",
     name: "Dr. Ahmed Hassan",
-    photoUrl: "https://randomuser.me/api/portraits/men/32.jpg",
+    photoKey: "https://randomuser.me/api/portraits/men/32.jpg",
     specialty: "Cardiology",
     bio: "Dr. Ahmed Hassan is a consultant cardiologist with 15 years of experience. He focuses on preventing heart disease and on follow-up care after treatment. He sees patients with high blood pressure, chest pain and heart rhythm problems.",
     motto: "A healthy heart starts with small habits, and I will help you build them.",
@@ -16,7 +16,7 @@ export const doctors: Doctor[] = [
   {
     id: "d2",
     name: "Dr. Mona Farouk",
-    photoUrl: "https://randomuser.me/api/portraits/women/44.jpg",
+    photoKey: "https://randomuser.me/api/portraits/women/44.jpg",
     specialty: "Dermatology",
     bio: "Dr. Mona Farouk is a dermatologist with 9 years of experience. She treats skin, hair and nail conditions in adults and teenagers, including acne, eczema and hair loss. Every visit ends with a clear treatment plan.",
     motto: "Good skin care should be simple, honest and something you can keep up.",
@@ -28,7 +28,7 @@ export const doctors: Doctor[] = [
   {
     id: "d3",
     name: "Dr. Karim Adel",
-    photoUrl: "https://randomuser.me/api/portraits/men/75.jpg",
+    photoKey: "https://randomuser.me/api/portraits/men/75.jpg",
     specialty: "Pediatrics",
     bio: "Dr. Karim Adel is a pediatrician with 12 years of experience caring for children from newborns to teenagers. He handles routine checkups, vaccinations and common childhood illnesses, and explains each step to parents.",
     motto: "Children are not small adults, so I take the time to listen to them.",
@@ -40,7 +40,7 @@ export const doctors: Doctor[] = [
   {
     id: "d4",
     name: "Dr. Sara Nabil",
-    photoUrl: "https://randomuser.me/api/portraits/women/68.jpg",
+    photoKey: "https://randomuser.me/api/portraits/women/68.jpg",
     specialty: "Orthopedics",
     bio: "Dr. Sara Nabil is an orthopedic specialist with 7 years of experience. She treats bone, joint and sports injuries, including fractures, back pain and knee problems, and helps patients plan their recovery.",
     motto: "Moving without pain is the goal, and we get there one step at a time.",
@@ -52,7 +52,7 @@ export const doctors: Doctor[] = [
   {
     id: "d5",
     name: "Dr. Youssef Samy",
-    photoUrl: "https://randomuser.me/api/portraits/men/12.jpg",
+    photoKey: "https://randomuser.me/api/portraits/men/12.jpg",
     specialty: "Dentistry",
     bio: "Dr. Youssef Samy is a general dentist with 5 years of experience. He offers checkups, cleanings and fillings, and takes time to explain each treatment before starting.",
     motto: "No surprises: you will always know what I am doing and why.",
@@ -63,7 +63,7 @@ export const doctors: Doctor[] = [
   {
     id: "d6",
     name: "Dr. Laila Mostafa",
-    photoUrl: "https://randomuser.me/api/portraits/women/26.jpg",
+    photoKey: "https://randomuser.me/api/portraits/women/26.jpg",
     specialty: "ENT",
     bio: "Dr. Laila Mostafa is an ear, nose and throat specialist with 11 years of experience. She treats allergies, sinus problems, hearing complaints and throat infections in adults and children.",
     motto: "Breathing, hearing and swallowing easily should never be taken for granted.",

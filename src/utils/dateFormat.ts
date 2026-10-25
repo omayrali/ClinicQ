@@ -1,5 +1,4 @@
-const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const MONTHS = [
+const months = [
   "Jan",
   "Feb",
   "Mar",
@@ -14,17 +13,17 @@ const MONTHS = [
   "Dec",
 ];
 
-export function formatDate(date: string): string {
-  const [year, month, day] = date.split("-").map(Number);
-  const weekday = WEEKDAYS[new Date(year, month - 1, day).getDay()];
-
-  return `${weekday}, ${day} ${MONTHS[month - 1]} ${year}`;
+export function formatDate(date: string) {
+  const [year, month, day] = date.split("-");
+  return day + " " + months[Number(month) - 1] + " " + year;
 }
 
-export function formatTime(time: string): string {
-  const [hours, minutes] = time.split(":").map(Number);
-  const suffix = hours >= 12 ? "PM" : "AM";
-  const hour12 = hours % 12 === 0 ? 12 : hours % 12;
+export function formatTime(time: string) {
+  const [hour, minute] = time.split(":");
+  const hourNumber = Number(hour);
 
-  return `${hour12}:${String(minutes).padStart(2, "0")} ${suffix}`;
+  if (hourNumber === 0) return "12:" + minute + " AM";
+  if (hourNumber < 12) return hourNumber + ":" + minute + " AM";
+  if (hourNumber === 12) return "12:" + minute + " PM";
+  return hourNumber - 12 + ":" + minute + " PM";
 }

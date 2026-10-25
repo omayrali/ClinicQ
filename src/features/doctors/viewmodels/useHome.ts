@@ -1,57 +1,57 @@
+import { useSession } from "@/context/SessionContext";
 import { getDoctors } from "@/data/repositories/doctor.repo";
 import { getNotifications } from "@/data/repositories/notification.repo";
 import {
   getAppointmentViews,
   type AppointmentView,
 } from "@/features/appointments/viewmodels/getAppointmentViews";
-import { getHomeData } from "@/features/doctors/viewmodels/homeData";
 import type { Doctor } from "@/models/doctor.model";
 import type { Notification } from "@/models/notification.model";
-import { useFocusEffect } from "expo-router";
-import { useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 
-export function useHome(userId: string) {
+export function useHome() {
+  const { user } = useSession();
+  const userId = user?.id ?? "";
+
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [appointments, setAppointments] = useState<AppointmentView[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [status, setStatus] = useState<"loading" | "error" | "ready">(
-    "loading",
-  );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  const load = useCallback(async () => {
-    try {
-      const [doctorList, appointmentList, notificationList] =
-        await Promise.all([
-          getDoctors(),
-          getAppointmentViews(userId),
-          getNotifications(userId),
-        ]);
-
-      setDoctors(doctorList);
-      setAppointments(appointmentList);
-      setNotifications(notificationList);
-      setStatus("ready");
-    } catch {
-      setStatus("error");
+  useEffect(() => {
+    async function loadData() {
+      try {
+        setDoctors(await getDoctors());
+        setAppointments(await getAppointmentViews(userId));
+        setNotifications(await getNotifications(userId));
+      } catch {
+        setError(true);
+      }
+      setLoading(false);
     }
+
+    loadData();
   }, [userId]);
 
-  // Reload whenever the Home tab comes into view, so changes made on other
-  // screens (a cancelled appointment, a read notification) show up here.
-  useFocusEffect(
-    useCallback(() => {
-      load();
-    }, [load]),
-  );
+  const categories = doctors
+    .map((doctor) => doctor.specialty)
+    .filter((specialty, index, all) => all.indexOf(specialty) === index);
 
-  function reload() {
-    setStatus("loading");
-    load();
-  }
+  const topDoctors = [...doctors]
+    .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
+    .slice(0, 5);
+
+  const nextAppointment = appointments.find((a) => a.status === "upcoming");
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   return {
-    status,
-    reload,
-    ...getHomeData(doctors, appointments, notifications),
+    userName: user?.name ?? "",
+    loading,
+    error,
+    categories,
+    topDoctors,
+    nextAppointment,
+    unreadCount,
   };
 }

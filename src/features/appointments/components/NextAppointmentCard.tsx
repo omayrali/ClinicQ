@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import type { AppointmentView } from "@/features/appointments/viewmodels/getAppointmentViews";
 import { colors } from "@/theme/tokens";
@@ -7,79 +6,52 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Pressable, View } from "react-native";
 
 type NextAppointmentCardProps = {
-  appointment: AppointmentView | null;
+  appointment?: AppointmentView;
   onPress: () => void;
-  onFindDoctor: () => void;
 };
 
 export function NextAppointmentCard({
   appointment,
   onPress,
-  onFindDoctor,
 }: NextAppointmentCardProps) {
   if (!appointment) {
     return (
-      <View className="gap-md rounded-sm bg-surface p-md shadow-sm shadow-black/10">
-        <View className="gap-xs">
-          <Text className="font-inter-medium text-lg">
-            No upcoming appointments
-          </Text>
-          <Text className="text-md text-subtext">
-            Find a doctor and book your next visit.
-          </Text>
-        </View>
-
-        <Button
-          variant="outline"
-          size="sm"
-          className="self-start border-primary"
-          onPress={onFindDoctor}
-        >
-          <Text className="font-inter-medium text-md text-primary">
-            Find a Doctor
-          </Text>
-        </Button>
-      </View>
+      <Pressable
+        onPress={onPress}
+        className="gap-xs rounded-sm border border-border bg-surface p-md"
+      >
+        <Text className="font-inter-medium text-md">
+          No upcoming appointments
+        </Text>
+        <Text className="text-sm text-muted">
+          Find a doctor and book your next visit
+        </Text>
+      </Pressable>
     );
   }
+
+  const [day, month] = formatDate(appointment.date).split(" ");
 
   return (
     <Pressable
       onPress={onPress}
-      accessibilityRole="button"
-      accessibilityLabel={`Next appointment with ${appointment.doctorName}`}
-      className="gap-md rounded-sm bg-primary p-md active:opacity-90"
+      className="flex-row items-center gap-md rounded-sm border border-border bg-surface p-md"
     >
-      <Text className="text-sm text-white/80">Next Appointment</Text>
-
-      <View className="flex-row items-center gap-sm">
-        <View className="h-10 w-10 items-center justify-center rounded-full bg-white/20">
-          <Ionicons name="person" size={20} color={colors.surface} />
-        </View>
-        <View className="flex-1 gap-xs">
-          <Text numberOfLines={1} className="font-inter-semibold text-lg text-white">
-            {appointment.doctorName}
-          </Text>
-          <Text numberOfLines={1} className="text-md text-white/80">
-            {appointment.specialty}
-          </Text>
-        </View>
+      <View className="h-14 w-14 items-center justify-center rounded-sm bg-primary">
+        <Text className="font-inter-bold text-xl text-white">{day}</Text>
+        <Text className="text-sm text-white">{month}</Text>
       </View>
 
-      <View className="gap-xs">
-        <View className="flex-row items-center gap-sm">
-          <Ionicons name="calendar-outline" size={16} color={colors.surface} />
-          <Text className="font-inter-medium text-md text-white">
-            {formatDate(appointment.date)} · {formatTime(appointment.startTime)}
-          </Text>
-        </View>
-        <View className="flex-row items-center gap-sm">
-          <Ionicons name="location-outline" size={16} color={colors.surface} />
-          <Text numberOfLines={1} className="flex-1 text-md text-white">
-            {appointment.clinicName}, {appointment.clinicAddress}
-          </Text>
-        </View>
+      <View className="flex-1 gap-xs">
+        <Text className="font-inter-semibold text-lg">
+          {appointment.doctorName}
+        </Text>
+        <Text className="text-md text-muted">
+          {appointment.specialty} · {formatTime(appointment.startTime)}
+        </Text>
       </View>
+
+      <Ionicons name="chevron-forward" size={20} color={colors.muted} />
     </Pressable>
   );
 }

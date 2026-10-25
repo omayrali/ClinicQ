@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Header } from "@/components/ui/Header";
@@ -40,6 +40,7 @@ export function AppointmentDetailsScreen() {
       <View className="gap-md py-md">
         <View className="items-center gap-sm">
           <Avatar alt={appointment.doctorName} className="size-20">
+            <AvatarImage source={{ uri: appointment.doctorPhotoKey }} />
             <AvatarFallback className="bg-accent">
               <Text className="font-inter-bold text-xxl text-primary">
                 {appointment.doctorName.replace("Dr. ", "")[0].toUpperCase()}

@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -42,6 +42,7 @@ export function AppointmentCard({
 
       <CardContent className="flex-row gap-md">
         <Avatar alt={appointmentView.doctorName} className="size-16 rounded-md">
+          <AvatarImage source={{ uri: appointmentView.doctorPhotoKey }} />
           <AvatarFallback className="rounded-md bg-accent">
             <Text className="font-inter-bold text-xl text-primary">
               {appointmentView.doctorName.replace("Dr. ", "")[0].toUpperCase()}

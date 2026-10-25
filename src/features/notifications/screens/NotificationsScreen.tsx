@@ -1,8 +1,8 @@
 import { Header } from "@/components/ui/Header";
 import { Screen } from "@/components/ui/Screen";
 import { ScreenState } from "@/components/ui/ScreenState";
-import { NotificationItem } from "@/features/notifications/components/NotificationItem";
-import { useNotifications } from "@/features/notifications/viewmodels/useNotifications";
+import { NotificationItem } from "../components/NotificationItem";
+import { useNotifications } from "../viewmodels/useNotifications";
 import { FlatList, View } from "react-native";
 
 export function NotificationsScreen() {

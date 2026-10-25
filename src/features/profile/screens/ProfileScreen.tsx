@@ -4,8 +4,8 @@ import { Card, CardContent } from "@/components/ui/Card";
 import { Header } from "@/components/ui/Header";
 import { Screen } from "@/components/ui/Screen";
 import { Text } from "@/components/ui/text";
-import { ProfileMenuItem } from "@/features/profile/components/ProfileMenuItem";
-import { useProfile } from "@/features/profile/viewmodels/useProfile";
+import { ProfileMenuItem } from "../components/ProfileMenuItem";
+import { useProfile } from "../viewmodels/useProfile";
 import { View } from "react-native";
 
 export function ProfileScreen() {

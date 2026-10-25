@@ -1,11 +1,5 @@
-import { Text } from "@/components/ui/text";
-import { Header } from "@/components/ui/Header";
-import { Screen } from "@/components/ui/Screen";
+import { NotificationsScreen } from "@/features/notifications/screens/NotificationsScreen";
 
 export default function Notifications() {
-  return (
-    <Screen header={<Header title="Notifications" />}>
-      <Text className="pt-md">Notifications screen</Text>
-    </Screen>
-  );
+  return <NotificationsScreen />;
 }

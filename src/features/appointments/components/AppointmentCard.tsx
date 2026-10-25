@@ -12,7 +12,7 @@ import { Text } from "@/components/ui/text";
 import { colors } from "@/theme/tokens";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { View } from "react-native";
-import type { AppointmentView } from "../viewmodels/useAppointments";
+import type { AppointmentView } from "../viewmodels/appointmentView";
 
 const statusStyles = {
   upcoming: { dot: "bg-warning", text: "text-warning" },

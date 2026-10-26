@@ -14,17 +14,16 @@ export function DoctorPhoto({
   className = "",
   textClassName = "text-lg",
 }: DoctorPhotoProps) {
-
   return (
     <View
       className={`items-center justify-center overflow-hidden bg-secondary ${className}`}
     >
       {doctor.photoKey ? (
         <Image
-          source={{ uri: doctor.photoKey }}
+          source={doctor.photoKey}
           style={{ width: "100%", height: "100%" }}
-          cachePolicy="none"
           contentFit="cover"
+          contentPosition="top"
         />
       ) : (
         <Text

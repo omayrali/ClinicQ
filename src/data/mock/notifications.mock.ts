@@ -8,7 +8,7 @@ export const notifications: Notification[] = [
     type: "confirmation",
     title: "Appointment confirmed",
     message:
-      "Your appointment with Dr. Ahmed Hassan on 22 Nov at 09:00 is confirmed.",
+      "Your appointment with Dr. Adel Shakal on 22 Nov at 09:00 is confirmed.",
     isRead: true,
     createdAt: "2026-10-20T10:15:00Z",
   },
@@ -19,7 +19,7 @@ export const notifications: Notification[] = [
     type: "reschedule",
     title: "Appointment rescheduled",
     message:
-      "Your appointment with Dr. Mona Farouk was moved to 23 Nov at 10:30.",
+      "Your appointment with Dr. Magdy Abdelghany was moved to 23 Nov at 10:30.",
     isRead: false,
     createdAt: "2026-10-21T08:40:00Z",
   },
@@ -29,7 +29,7 @@ export const notifications: Notification[] = [
     appointmentId: "a1",
     type: "reminder",
     title: "Upcoming appointment",
-    message: "Reminder: Dr. Ahmed Hassan tomorrow at 09:00, Maadi.",
+    message: "Reminder: Dr. Adel Shakal tomorrow at 09:00, Maadi.",
     isRead: false,
     createdAt: "2026-11-21T09:00:00Z",
   },
@@ -49,7 +49,7 @@ export const notifications: Notification[] = [
     type: "cancellation",
     title: "Appointment cancelled",
     message:
-      "Your appointment with Dr. Mona Farouk on 19 Oct at 10:00 was cancelled.",
+      "Your appointment with Dr. Magdy Abdelghany on 19 Oct at 10:00 was cancelled.",
     isRead: false,
     createdAt: "2026-10-15T16:20:00Z",
   },
@@ -60,7 +60,7 @@ export const notifications: Notification[] = [
     type: "confirmation",
     title: "Appointment confirmed",
     message:
-      "Your appointment with Dr. Ahmed Hassan on 24 Nov at 10:00 is confirmed.",
+      "Your appointment with Dr. Adel Shakal on 24 Nov at 10:00 is confirmed.",
     isRead: false,
     createdAt: "2026-10-21T14:05:00Z",
   },

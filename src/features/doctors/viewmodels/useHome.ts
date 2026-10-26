@@ -8,7 +8,8 @@ import {
 } from "@/features/appointments/viewmodels/appointmentView";
 import type { Doctor } from "@/models/doctor.model";
 import type { Notification } from "@/models/notification.model";
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 
 export function useHome() {
   const { user } = useSession();
@@ -20,21 +21,24 @@ export function useHome() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        setDoctors(await getDoctors());
-        const patientAppointments = await getAppointmentsByPatient(userId);
-        setAppointments(await Promise.all(patientAppointments.map(getAppointmentView)));
-        setNotifications(await getNotifications(userId));
-      } catch {
-        setError(true);
+  // Runs every time the Home tab comes back into view, so a new booking shows up
+  useFocusEffect(
+    useCallback(() => {
+      async function loadData() {
+        try {
+          setDoctors(await getDoctors());
+          const patientAppointments = await getAppointmentsByPatient(userId);
+          setAppointments(await Promise.all(patientAppointments.map(getAppointmentView)));
+          setNotifications(await getNotifications(userId));
+        } catch {
+          setError(true);
+        }
+        setLoading(false);
       }
-      setLoading(false);
-    }
 
-    loadData();
-  }, [userId]);
+      loadData();
+    }, [userId]),
+  );
 
   const categories = doctors
     .map((doctor) => doctor.specialty)

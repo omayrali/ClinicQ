@@ -40,7 +40,7 @@ export function AppointmentDetailsScreen() {
       <View className="gap-md py-md">
         <View className="items-center gap-sm">
           <Avatar alt={appointment.doctorName} className="size-20">
-            <AvatarImage source={{ uri: appointment.doctorPhotoKey }} />
+            <AvatarImage source={appointment.doctorPhotoKey} />
             <AvatarFallback className="bg-accent">
               <Text className="font-inter-bold text-xxl text-primary">
                 {appointment.doctorName.replace("Dr. ", "")[0].toUpperCase()}

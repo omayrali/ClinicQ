@@ -69,7 +69,7 @@ export function DoctorProfileScreen({ doctorId }: { doctorId: string }) {
         <View className="rounded-md border border-border bg-surface p-sm">
           <DoctorPhoto
             doctor={doctor}
-            className="h-64 w-full rounded-sm"
+            className="aspect-square w-full rounded-sm"
             textClassName="text-xxl"
           />
         </View>

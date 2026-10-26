@@ -12,7 +12,7 @@ export interface AppointmentView {
   createdAt: string;
   doctorId: string;
   doctorName: string;
-  doctorPhotoKey?: string;
+  doctorPhotoKey?: number;
   specialty: string;
   consultationFee: number; 
   clinicName: string;

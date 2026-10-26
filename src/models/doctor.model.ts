@@ -4,7 +4,7 @@ export interface Doctor {
   specialty: string;
   bio: string;
   motto?: string;
-  photoKey?: string;
+  photoKey?: number;
   consultationFee: number;
   yearsOfExperience: number;
   clinicId: string;

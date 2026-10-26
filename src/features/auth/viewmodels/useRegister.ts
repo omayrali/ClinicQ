@@ -1,4 +1,5 @@
 import { useSession } from "@/context/SessionContext";
+import { createNotification } from "@/data/repositories/notification.repo";
 import { register } from "@/data/repositories/user.repo";
 import { registerSchema } from "@/features/auth/schemas/registerSchema";
 import { useRouter } from "expo-router";
@@ -51,6 +52,12 @@ export function useRegister() {
     try {
       const { name, email, phone, password } = result.data;
       const user = await register(name, email, phone, password);
+      await createNotification({
+            userId: user.id,
+            type: "general",
+            title: "Welcome to ClinicQ",
+            message: "Browse doctors and book your first appointment.",
+          });
       signIn(user);
       router.replace("/");
     } catch (error) {

@@ -1,5 +1,9 @@
 import { useSession } from "@/context/SessionContext";
-import { bookAppointment } from "@/data/repositories/appointment.repo";
+import {
+  bookAppointment,
+  getAppointmentById,
+  rescheduleAppointment,
+} from "@/data/repositories/appointment.repo";
 import { createNotification } from "@/data/repositories/notification.repo";
 import { getSlotsByDoctor } from "@/data/repositories/slot.repo";
 import { useDoctorProfile } from "@/features/doctors/viewmodels/useDoctorProfile";
@@ -10,7 +14,7 @@ import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { getAvailableDates, groupSlotsByPartOfDay } from "./bookingData";
 
-export function useBooking(doctorId: string) {
+export function useBooking(doctorId: string, appointmentId?: string) {
   const { user } = useSession();
   const { doctor, clinic, error } = useDoctorProfile(doctorId);
 
@@ -75,6 +79,28 @@ export function useBooking(doctorId: string) {
     setBookingError("");
 
     try {
+      if (appointmentId) {
+        await rescheduleAppointment(appointmentId, selectedSlot.id);
+        await createNotification({
+          userId: user.id,
+          appointmentId,
+          type: "reschedule",
+          title: "Appointment rescheduled",
+          message:
+            "Your appointment with " +
+            doctor.name +
+            " has been moved to " +
+            formatDate(selectedSlot.date) +
+            " at " +
+            formatTime(selectedSlot.startTime) +
+            ".",
+        });
+        const appointment = await getAppointmentById(appointmentId);
+        setBooked({ appointment, slot: selectedSlot });
+        setSubmitting(false);
+        return;
+      }
+
       const appointment = await bookAppointment(user.id, selectedSlot.id);
 
       await createNotification({

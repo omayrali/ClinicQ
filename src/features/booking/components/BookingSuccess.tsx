@@ -6,6 +6,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { View } from "react-native";
 
 type BookingSuccessProps = {
+  title?: string;
   doctorName: string;
   date: string;
   time: string;
@@ -15,6 +16,7 @@ type BookingSuccessProps = {
 };
 
 export function BookingSuccess({
+  title = "Appointment booked",
   doctorName,
   date,
   time,
@@ -26,7 +28,7 @@ export function BookingSuccess({
     <View className="flex-1 justify-center gap-lg py-lg">
       <View className="items-center gap-sm">
         <Ionicons name="checkmark-circle" size={64} color={colors.success} />
-        <Text className="font-inter-semibold text-xl">Appointment booked</Text>
+        <Text className="font-inter-semibold text-xl">{title}</Text>
         <Text className="text-md text-subtext">with {doctorName}</Text>
       </View>
 

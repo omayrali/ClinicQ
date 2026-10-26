@@ -75,7 +75,14 @@ export function useAppointmentDetails() {
     }
   }
 
-  function reschedule() {}
+  function reschedule() {
+    if (!appointment) return;
+
+    router.push({
+      pathname: "/doctors/[doctorId]/book",
+      params: { doctorId: appointment.doctorId, appointmentId: appointment.id },
+    });
+  }
 
   function addToCalendar() {}
 

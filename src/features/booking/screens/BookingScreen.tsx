@@ -21,8 +21,15 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
 
-export function BookingScreen({ doctorId }: { doctorId: string }) {
+export function BookingScreen({
+  doctorId,
+  appointmentId,
+}: {
+  doctorId: string;
+  appointmentId?: string;
+}) {
   const router = useRouter();
+  const title = appointmentId ? "Reschedule Appointment" : "Book Appointment";
   const {
     doctor,
     clinic,
@@ -38,11 +45,11 @@ export function BookingScreen({ doctorId }: { doctorId: string }) {
     submitting,
     bookingError,
     booked,
-  } = useBooking(doctorId);
+  } = useBooking(doctorId, appointmentId);
 
   if (!doctor || !clinic || loading) {
     return (
-      <Screen header={<Header title="Book Appointment" />}>
+      <Screen header={<Header title={title} />}>
         {error ? (
           <ScreenState
             type="error"
@@ -58,13 +65,22 @@ export function BookingScreen({ doctorId }: { doctorId: string }) {
 
   if (booked) {
     return (
-      <Screen header={<Header title="Booking Confirmed" />}>
+      <Screen
+        header={
+          <Header
+            title={appointmentId ? "Reschedule Confirmed" : "Booking Confirmed"}
+          />
+        }
+      >
         <BookingSuccess
+          title={appointmentId ? "Appointment rescheduled" : undefined}
           doctorName={doctor.name}
           date={formatLongDate(booked.slot.date)}
           time={formatTime(booked.slot.startTime)}
           clinic={`${clinic.name}, ${clinic.address}`}
-          onViewAppointment={() => router.replace("/appointments")}
+          onViewAppointment={() =>
+            router.replace(`/appointments/${booked.appointment.id}`)
+          }
         />
       </Screen>
     );
@@ -72,7 +88,7 @@ export function BookingScreen({ doctorId }: { doctorId: string }) {
 
   if (dates.length === 0) {
     return (
-      <Screen header={<Header title="Book Appointment" />}>
+      <Screen header={<Header title={title} />}>
         <ScreenState
           type="empty"
           icon="calendar-outline"
@@ -86,7 +102,7 @@ export function BookingScreen({ doctorId }: { doctorId: string }) {
   return (
     <Screen
       scroll
-      header={<Header title="Book Appointment" />}
+      header={<Header title={title} />}
       footer={
         <Button
           size="lg"
@@ -96,10 +112,14 @@ export function BookingScreen({ doctorId }: { doctorId: string }) {
         >
           <Text className="font-inter-semibold text-lg">
             {submitting
-              ? "Booking..."
-              : selectedSlot
-                ? "Confirm Booking"
-                : "Choose a time"}
+              ? appointmentId
+                ? "Rescheduling..."
+                : "Booking..."
+              : !selectedSlot
+                ? "Choose a time"
+                : appointmentId
+                  ? "Confirm Reschedule"
+                  : "Confirm Booking"}
           </Text>
         </Button>
       }

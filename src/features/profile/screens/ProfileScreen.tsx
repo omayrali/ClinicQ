@@ -4,12 +4,13 @@ import { Card, CardContent } from "@/components/ui/Card";
 import { Header } from "@/components/ui/Header";
 import { Screen } from "@/components/ui/Screen";
 import { Text } from "@/components/ui/text";
+import { View } from "react-native";
 import { ProfileMenuItem } from "../components/ProfileMenuItem";
 import { useProfile } from "../viewmodels/useProfile";
-import { View } from "react-native";
 
 export function ProfileScreen() {
-  const { user, openAppointments, openNotifications, logout } = useProfile();
+  const { user, openAppointments, openNotifications, openTerms, logout } =
+    useProfile();
 
   if (!user) return null;
 
@@ -44,6 +45,11 @@ export function ProfileScreen() {
             icon="notifications-outline"
             label="Notifications"
             onPress={openNotifications}
+          />
+          <ProfileMenuItem
+            icon="document-text-outline"
+            label="Terms and Conditions"
+            onPress={openTerms}
           />
         </View>
 

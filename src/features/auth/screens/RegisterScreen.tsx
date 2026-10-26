@@ -4,9 +4,11 @@ import { Text } from "@/components/ui/text";
 import { AuthField } from "@/features/auth/components/AuthField";
 import { AuthTabs } from "@/features/auth/components/AuthTabs";
 import { useRegister } from "@/features/auth/viewmodels/useRegister";
+import { useRouter } from "expo-router";
 import { View } from "react-native";
 
 export function RegisterScreen() {
+  const router = useRouter();
   const { values, setValue, errors, loading, submit } = useRegister();
 
   return (
@@ -70,6 +72,10 @@ export function RegisterScreen() {
           <Text className="font-inter-semibold text-lg">
             {loading ? "Creating account..." : "Sign up"}
           </Text>
+        </Button>
+
+        <Button variant="link" onPress={() => router.push("/terms")}>
+          <Text>Terms and Conditions</Text>
         </Button>
       </View>
     </Screen>

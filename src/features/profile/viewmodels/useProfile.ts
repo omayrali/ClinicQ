@@ -14,6 +14,10 @@ export function useProfile() {
     router.push("/notifications");
   }
 
+  function openTerms() {
+    router.push("/terms");
+  }
+
   function logout() {
     Alert.alert("Logout", "Are you sure you want to logout?", [
       { text: "Cancel", style: "cancel" },
@@ -30,5 +34,5 @@ export function useProfile() {
     router.replace("/");
   }
 
-  return { user, openAppointments, openNotifications, logout };
+  return { user, openAppointments, openNotifications, openTerms, logout };
 }

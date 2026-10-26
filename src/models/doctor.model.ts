@@ -3,7 +3,6 @@ export interface Doctor {
   name: string;
   specialty: string;
   bio: string;
-  motto?: string;
   photoKey?: number;
   consultationFee: number;
   yearsOfExperience: number;

@@ -25,6 +25,8 @@ export function SearchScreen() {
     setRatingIndex,
     activeFilters,
     resetFilters,
+    priceLabels,
+    ratingLabels,
     results,
     loading,
     error,
@@ -145,8 +147,10 @@ export function SearchScreen() {
       <FilterSheet
         visible={filterOpen}
         onClose={() => setFilterOpen(false)}
+        priceLabels={priceLabels}
         priceIndex={priceIndex}
         onPriceChange={setPriceIndex}
+        ratingLabels={ratingLabels}
         ratingIndex={ratingIndex}
         onRatingChange={setRatingIndex}
         onReset={resetFilters}

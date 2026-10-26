@@ -1,7 +1,6 @@
 import { Text } from "@/components/ui/text";
 import type { AppointmentView } from "@/features/appointments/viewmodels/appointmentView";
 import { colors } from "@/theme/tokens";
-import { formatDate, formatTime } from "@/utils/dateFormat";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Pressable, View } from "react-native";
 
@@ -30,7 +29,9 @@ export function NextAppointmentCard({
     );
   }
 
-  const [day, month] = formatDate(appointment.date).split(" ");
+  const date = new Date(appointment.date);
+  const day = date.getDate();
+  const month = date.toLocaleDateString("en-US", { month: "short" });
 
   return (
     <Pressable
@@ -47,7 +48,7 @@ export function NextAppointmentCard({
           {appointment.doctorName}
         </Text>
         <Text className="text-md text-muted">
-          {appointment.specialty} · {formatTime(appointment.startTime)}
+          {appointment.specialty} · {appointment.startTime}
         </Text>
       </View>
 

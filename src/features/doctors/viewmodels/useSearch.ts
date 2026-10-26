@@ -1,8 +1,48 @@
 import { getDoctors } from "@/data/repositories/doctor.repo";
-import { searchDoctors } from "@/features/doctors/viewmodels/searchDoctors";
 import type { Doctor } from "@/models/doctor.model";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
+
+const priceOptions = [
+  { label: "Any price", min: 0, max: Infinity },
+  { label: "Under 400 EGP", min: 0, max: 399 },
+  { label: "400 - 500 EGP", min: 400, max: 500 },
+  { label: "Over 500 EGP", min: 501, max: Infinity },
+];
+
+const ratingOptions = [
+  { label: "Any rating", min: 0 },
+  { label: "4.5 and up", min: 4.5 },
+  { label: "4.0 and up", min: 4 },
+];
+
+type SearchFilters = {
+  query: string;
+  specialty?: string;
+  priceIndex: number;
+  ratingIndex: number;
+};
+
+function searchDoctors(doctors: Doctor[], filters: SearchFilters) {
+  const text = filters.query.trim().toLowerCase();
+  const price = priceOptions[filters.priceIndex];
+  const minRating = ratingOptions[filters.ratingIndex].min;
+
+  return doctors
+    .filter((doctor) => !filters.specialty || doctor.specialty === filters.specialty)
+    .filter(
+      (doctor) =>
+        doctor.name.toLowerCase().includes(text) ||
+        doctor.specialty.toLowerCase().includes(text),
+    )
+    .filter(
+      (doctor) =>
+        doctor.consultationFee >= price.min &&
+        doctor.consultationFee <= price.max,
+    )
+    .filter((doctor) => (doctor.rating ?? 0) >= minRating)
+    .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
+}
 
 export function useSearch() {
   const router = useRouter();
@@ -62,6 +102,8 @@ export function useSearch() {
     setRatingIndex,
     activeFilters,
     resetFilters,
+    priceLabels: priceOptions.map((option) => option.label),
+    ratingLabels: ratingOptions.map((option) => option.label),
     results,
     loading,
     error,

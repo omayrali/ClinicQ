@@ -10,13 +10,6 @@ import { TimeSlotChip } from "@/features/booking/components/TimeSlotChip";
 import { useBooking } from "@/features/booking/viewmodels/useBooking";
 import { DoctorPhoto } from "@/features/doctors/components/DoctorPhoto";
 import { colors } from "@/theme/tokens";
-import {
-  formatLongDate,
-  formatMonth,
-  formatTime,
-  getDayName,
-  getDayNumber,
-} from "@/utils/dateFormat";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
@@ -75,8 +68,8 @@ export function BookingScreen({
         <BookingSuccess
           title={appointmentId ? "Appointment rescheduled" : undefined}
           doctorName={doctor.name}
-          date={formatLongDate(booked.slot.date)}
-          time={formatTime(booked.slot.startTime)}
+          date={new Date(booked.slot.date).toLocaleDateString()}
+          time={booked.slot.startTime}
           clinic={`${clinic.name}, ${clinic.address}`}
           onViewAppointment={() =>
             router.replace(`/appointments/${booked.appointment.id}`)
@@ -143,7 +136,7 @@ export function BookingScreen({
           <View className="flex-row items-center justify-between">
             <Text className="font-inter-semibold text-lg">Select a date</Text>
             <Text className="text-md text-muted">
-              {formatMonth(selectedDate)}
+              {new Date(selectedDate).toLocaleDateString("en-US", { month: "long", year: "numeric" })}
             </Text>
           </View>
 
@@ -156,8 +149,8 @@ export function BookingScreen({
               {dates.map((date) => (
                 <DayPill
                   key={date}
-                  dayName={getDayName(date)}
-                  dayNumber={getDayNumber(date)}
+                  dayName={new Date(date).toLocaleDateString("en-US", { weekday: "short" })}
+                  dayNumber={String(new Date(date).getDate())}
                   selected={date === selectedDate}
                   onPress={() => selectDate(date)}
                 />
@@ -166,7 +159,7 @@ export function BookingScreen({
           </View>
 
           <Text className="text-md text-subtext">
-            {formatLongDate(selectedDate)}
+            {new Date(selectedDate).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}
           </Text>
         </View>
 
@@ -184,7 +177,7 @@ export function BookingScreen({
               {group.slots.map((slot) => (
                 <TimeSlotChip
                   key={slot.id}
-                  label={formatTime(slot.startTime)}
+                  label={slot.startTime}
                   selected={slot.id === selectedSlot?.id}
                   disabled={slot.status !== "available"}
                   onPress={() => selectSlot(slot.id)}
@@ -204,12 +197,12 @@ export function BookingScreen({
             <DetailRow
               icon="calendar-outline"
               label="Date"
-              value={formatLongDate(selectedSlot.date)}
+              value={new Date(selectedSlot.date).toLocaleDateString()}
             />
             <DetailRow
               icon="time-outline"
               label="Time"
-              value={formatTime(selectedSlot.startTime)}
+              value={selectedSlot.startTime}
             />
             <DetailRow
               icon="cash-outline"

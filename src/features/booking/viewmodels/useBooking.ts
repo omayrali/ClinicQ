@@ -9,10 +9,35 @@ import { getSlotsByDoctor } from "@/data/repositories/slot.repo";
 import { useDoctorProfile } from "@/features/doctors/viewmodels/useDoctorProfile";
 import type { Appointment } from "@/models/appointment.model";
 import type { Slot } from "@/models/slot.model";
-import { formatDate, formatTime, todayString } from "@/utils/dateFormat";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { getAvailableDates, groupSlotsByPartOfDay } from "./bookingData";
+
+export function getAvailableDates(slots: Slot[], today: string) {
+  const dates = slots
+    .filter((slot) => slot.status === "available" && slot.date >= today)
+    .map((slot) => slot.date)
+    .filter((date, index, all) => all.indexOf(date) === index);
+
+  return dates.sort();
+}
+
+export function groupSlotsByPartOfDay(slots: Slot[]) {
+  const sorted = [...slots].sort((a, b) => a.startTime.localeCompare(b.startTime));
+
+  const groups = [
+    { title: "Morning", slots: sorted.filter((s) => Number(s.startTime.slice(0, 2)) < 12) },
+    {
+      title: "Afternoon",
+      slots: sorted.filter((s) => {
+        const hour = Number(s.startTime.slice(0, 2));
+        return hour >= 12 && hour < 18;
+      }),
+    },
+    { title: "Evening", slots: sorted.filter((s) => Number(s.startTime.slice(0, 2)) >= 18) },
+  ];
+
+  return groups.filter((group) => group.slots.length > 0);
+}
 
 export function useBooking(doctorId: string, appointmentId?: string) {
   const { user } = useSession();
@@ -40,7 +65,8 @@ export function useBooking(doctorId: string, appointmentId?: string) {
     loadSlots();
   }, [doctorId, reloadCount]);
 
-  const dates = getAvailableDates(slots, todayString());
+  const today = new Date().toISOString().slice(0, 10);
+  const dates = getAvailableDates(slots, today);
   const selectedDate = dates.includes(chosenDate) ? chosenDate : dates[0];
   const slotsOfDay = slots.filter((slot) => slot.date === selectedDate);
   const slotGroups = groupSlotsByPartOfDay(slotsOfDay);
@@ -90,9 +116,9 @@ export function useBooking(doctorId: string, appointmentId?: string) {
             "Your appointment with " +
             doctor.name +
             " has been moved to " +
-            formatDate(selectedSlot.date) +
+            new Date(selectedSlot.date).toLocaleDateString() +
             " at " +
-            formatTime(selectedSlot.startTime) +
+            selectedSlot.startTime +
             ".",
         });
         const appointment = await getAppointmentById(appointmentId);
@@ -112,9 +138,9 @@ export function useBooking(doctorId: string, appointmentId?: string) {
           "Your appointment with " +
           doctor.name +
           " on " +
-          formatDate(selectedSlot.date) +
+          new Date(selectedSlot.date).toLocaleDateString() +
           " at " +
-          formatTime(selectedSlot.startTime) +
+          selectedSlot.startTime +
           " is confirmed.",
       });
 

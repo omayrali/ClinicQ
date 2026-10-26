@@ -1,17 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import {
-  priceOptions,
-  ratingOptions,
-} from "@/features/doctors/viewmodels/searchFilters";
 import { Modal, Pressable, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type FilterSheetProps = {
   visible: boolean;
   onClose: () => void;
+  priceLabels: string[];
   priceIndex: number;
   onPriceChange: (index: number) => void;
+  ratingLabels: string[];
   ratingIndex: number;
   onRatingChange: (index: number) => void;
   onReset: () => void;
@@ -49,8 +47,10 @@ function Options({ labels, selected, onSelect }: OptionsProps) {
 export function FilterSheet({
   visible,
   onClose,
+  priceLabels,
   priceIndex,
   onPriceChange,
+  ratingLabels,
   ratingIndex,
   onRatingChange,
   onReset,
@@ -81,7 +81,7 @@ export function FilterSheet({
         <View className="gap-sm">
           <Text className="font-inter-medium text-md">Price</Text>
           <Options
-            labels={priceOptions.map((option) => option.label)}
+            labels={priceLabels}
             selected={priceIndex}
             onSelect={onPriceChange}
           />
@@ -90,7 +90,7 @@ export function FilterSheet({
         <View className="gap-sm">
           <Text className="font-inter-medium text-md">Rating</Text>
           <Options
-            labels={ratingOptions.map((option) => option.label)}
+            labels={ratingLabels}
             selected={ratingIndex}
             onSelect={onRatingChange}
           />

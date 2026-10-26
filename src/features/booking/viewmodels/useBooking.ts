@@ -7,6 +7,7 @@ import type { Appointment } from "@/models/appointment.model";
 import type { Slot } from "@/models/slot.model";
 import { formatDate, formatTime, todayString } from "@/utils/dateFormat";
 import { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { getAvailableDates, groupSlotsByPartOfDay } from "./bookingData";
 
 export function useBooking(doctorId: string) {
@@ -21,7 +22,10 @@ export function useBooking(doctorId: string) {
   const [selectedSlotId, setSelectedSlotId] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [bookingError, setBookingError] = useState("");
-  const [booked, setBooked] = useState<{ appointment: Appointment; slot: Slot } | null>(null);
+  const [booked, setBooked] = useState<{
+    appointment: Appointment;
+    slot: Slot;
+  } | null>(null);
 
   useEffect(() => {
     async function loadSlots() {
@@ -49,7 +53,22 @@ export function useBooking(doctorId: string) {
     setBookingError("");
   }
 
-  async function confirm() {
+  function confirm() {
+    Alert.alert(
+      "Confirm appointment",
+      "Are you sure you want to confirm this appointment?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Confirm",
+          style: "destructive",
+          onPress: confirmBooking,
+        },
+      ],
+    );
+  }
+
+  async function confirmBooking() {
     if (!user || !doctor || !selectedSlot) return;
 
     setSubmitting(true);

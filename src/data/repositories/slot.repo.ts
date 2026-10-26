@@ -24,6 +24,28 @@ export async function getSlots(
   );
 }
 
+export async function addSlot(
+  slot: Omit<Slot, "id" | "status">,
+): Promise<void> {
+  const id = `${slot.doctorId}_${slot.date}_${slot.startTime}`;
+
+  if (slots.some((existing) => existing.id === id)) {
+    throw new Error("Slot already exists");
+  }
+
+  slots.push({ ...slot, id, status: "available" });
+}
+
+export async function removeSlot(slotId: string): Promise<void> {
+  const slot = findSlot(slotId);
+
+  if (slot.status === "booked") {
+    throw new Error("Booked slots cannot be removed");
+  }
+
+  slots.splice(slots.indexOf(slot), 1);
+}
+
 export async function getSlotsByDoctor(doctorId: string): Promise<Slot[]> {
   return sortByTime(
     slots.filter((s) => s.doctorId === doctorId).map((s) => ({ ...s })),

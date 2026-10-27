@@ -16,7 +16,7 @@ const initialStats: DashboardStats = {
   upcomingAppointments: 0,
 };
 
-export function useStaffDashboardViewModel() {
+export function useStaffDashboard() {
   const [stats, setStats] = useState<DashboardStats>(initialStats);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

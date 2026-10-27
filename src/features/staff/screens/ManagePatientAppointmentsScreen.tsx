@@ -10,10 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { colors } from "@/theme/tokens";
 
-import {
-  usePatientAppointments,
-  type StatusFilter,
-} from "../viewmodels/usePatientAppointments";
+import { usePatientAppointments,type StatusFilter} from "../viewmodels/usePatientAppointments";
 
 const filters: StatusFilter[] = ["all", "upcoming", "completed", "cancelled"];
 

@@ -13,7 +13,7 @@ import {
 import { ScreenState } from '@/components/ui/ScreenState';
 
 import { colors } from '@/theme/tokens';
-import { useStaffDashboardViewModel } from '@/features/staff/viewmodels/useStaffDashboardViewModel';
+import { useStaffDashboard } from '@/features/staff/viewmodels/useStaffDashboard';
 
 
 
@@ -59,8 +59,7 @@ function KpiCard({
 
 export default function StaffDashboardScreen() {
   const { stats, loading, error, reload } =
-    useStaffDashboardViewModel();
-
+    useStaffDashboard();
   return (
     <Screen
       scroll

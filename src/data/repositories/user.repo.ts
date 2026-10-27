@@ -53,3 +53,21 @@ export async function register(
 export async function getUserById(id: string): Promise<User> {
   return { ...findUser(id) };
 }
+
+export async function updateUser(
+  id: string,
+  changes: Partial<Pick<User, "name" | "email" | "phone" | "password">>,
+): Promise<User> {
+  const user = findUser(id);
+
+  if (changes.email) {
+    const other = findUserByEmail(changes.email);
+
+    if (other && other.id !== id) {
+      throw new Error("An account with this email already exists");
+    }
+  }
+
+  Object.assign(user, changes);
+  return { ...user };
+}

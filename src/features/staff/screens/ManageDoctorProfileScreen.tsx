@@ -10,22 +10,20 @@ import { Text } from '@/components/ui/text';
 import { ScreenState } from '@/components/ui/ScreenState';
 import { colors } from '@/theme/tokens';
 import { useManageDoctorProfileViewModel } from '../viewmodels/useDoctorProfile';
+import { router } from 'expo-router';
 
 export default function ManageDoctorProfileScreen() {
   const {
     doctors,
     selectedDoctor,
-    selectedDoctorId,
     draft,
     loading,
     saving,
     error,
     successMessage,
     hasChanges,
-    selectDoctor,
     updateDraft,
     saveChanges,
-    resetChanges,
     reload,
   } = useManageDoctorProfileViewModel();
 
@@ -66,7 +64,7 @@ export default function ManageDoctorProfileScreen() {
 
       <View className="mb-5 mt-3">
         <Text className="text-2xl font-bold text-foreground">
-          Doctor Profiles
+          Doctor Profile
         </Text>
       </View>
 
@@ -83,41 +81,6 @@ export default function ManageDoctorProfileScreen() {
           </Text>
         </View>
       )}
-
-      <Card className="mb-5">
-        <CardContent>
-          <View className="gap-2">
-            {doctors.map((doctor) => {
-              const selected = doctor.id === selectedDoctorId;
-
-              return (
-                <Button
-                  key={doctor.id}
-                  variant={selected ? 'default' : 'outline'}
-                  onPress={() => {
-                    setFeeInput('');
-                    setExperienceInput('');
-                    selectDoctor(doctor.id);
-                  }}
-                  className="justify-start"
-                >
-                  <Ionicons
-                    name="person-circle-outline"
-                    size={20}
-                    color={selected ? colors.surface : colors.primary}
-                  />
-                  <Text className="ml-2">
-                    {doctor.name}
-                    {' · '}
-                    {doctor.specialty}
-                  </Text>
-                </Button>
-              );
-            })}
-          </View>
-        </CardContent>
-      </Card>
-
       {selectedDoctor && (
         <Card className="mb-5">
           <CardHeader>
@@ -275,25 +238,47 @@ export default function ManageDoctorProfileScreen() {
               </View>
 
           <View className="mt-2 gap-3">
-                <Button
-                  onPress={() => void saveChanges()}
-                  disabled={!hasChanges || saving}
-                >
-                  {saving ? (
-                    <Text>Saving...</Text>
-                  ) : (
-                    <>
-                      <Ionicons
-                        name="save-outline"
-                        size={18}
-                        color={colors.surface}
-                      />
-                      <Text className="ml-2">Save Changes</Text>
-                    </>
-                  )}
-                </Button>
-              </View>
-            </View>
+  <Button
+    onPress={() => void saveChanges()}
+    disabled={!hasChanges || saving}
+  >
+    {saving ? (
+      <Text>Saving...</Text>
+    ) : (
+      <>
+        <Ionicons
+          name="save-outline"
+          size={18}
+          color={colors.surface}
+        />
+        <Text className="ml-2">Save Changes</Text>
+      </>
+    )}
+  </Button>
+
+  <Button
+    variant="outline"
+    onPress={() => {
+      if (!selectedDoctor) return;
+
+      router.push({
+        pathname: '/(staff)/manage-doctor-schedule',
+        params: {
+          doctorId: selectedDoctor.id,
+        },
+      });
+    }}
+    disabled={!selectedDoctor}
+  >
+    <Ionicons
+      name="calendar-outline"
+      size={18}
+      color={colors.primary}
+    />
+    <Text className="ml-2">Manage Schedule</Text>
+  </Button>
+  </View>
+  </View>
           </CardContent>
         </Card>
       )}

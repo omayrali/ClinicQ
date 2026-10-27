@@ -15,17 +15,14 @@ export default function ManageDoctorProfileScreen() {
   const {
     doctors,
     selectedDoctor,
-    selectedDoctorId,
     draft,
     loading,
     saving,
     error,
     successMessage,
     hasChanges,
-    selectDoctor,
     updateDraft,
     saveChanges,
-    resetChanges,
     reload,
   } = useManageDoctorProfileViewModel();
 
@@ -66,7 +63,7 @@ export default function ManageDoctorProfileScreen() {
 
       <View className="mb-5 mt-3">
         <Text className="text-2xl font-bold text-foreground">
-          Doctor Profiles
+          Doctor Profile
         </Text>
       </View>
 
@@ -83,41 +80,6 @@ export default function ManageDoctorProfileScreen() {
           </Text>
         </View>
       )}
-
-      <Card className="mb-5">
-        <CardContent>
-          <View className="gap-2">
-            {doctors.map((doctor) => {
-              const selected = doctor.id === selectedDoctorId;
-
-              return (
-                <Button
-                  key={doctor.id}
-                  variant={selected ? 'default' : 'outline'}
-                  onPress={() => {
-                    setFeeInput('');
-                    setExperienceInput('');
-                    selectDoctor(doctor.id);
-                  }}
-                  className="justify-start"
-                >
-                  <Ionicons
-                    name="person-circle-outline"
-                    size={20}
-                    color={selected ? colors.surface : colors.primary}
-                  />
-                  <Text className="ml-2">
-                    {doctor.name}
-                    {' · '}
-                    {doctor.specialty}
-                  </Text>
-                </Button>
-              );
-            })}
-          </View>
-        </CardContent>
-      </Card>
-
       {selectedDoctor && (
         <Card className="mb-5">
           <CardHeader>

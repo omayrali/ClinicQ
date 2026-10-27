@@ -86,7 +86,7 @@ export function usePatientAppointments() {
         return;
       }
 
-      // Reload to reflect the updated repository status.
+      
       const appointments = await getAllAppointments();
       setItems(appointments);
     } catch (err) {

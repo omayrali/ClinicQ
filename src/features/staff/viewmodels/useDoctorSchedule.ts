@@ -2,11 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Doctor } from '@/models/doctor.model';
 import { Slot } from '@/models/slot.model';
 import { getDoctors} from '@/data/repositories/doctor.repo';
-import {
-  addSlot as createSlot,
-  getSlots,
-  removeSlot as deleteSlot,
-} from '@/data/repositories/slot.repo';
+import {addSlot as createSlot, getSlots,removeSlot as deleteSlot} from '@/data/repositories/slot.repo';
 
 const TIME_REGEX = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
 

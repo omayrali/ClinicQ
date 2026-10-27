@@ -1,10 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Appointment, AppointmentStatus } from '@/models/appointment.model';
-import { getAppointments, updateAppointmentStatus } from '@/data/repositories/appointment.repo';
+import type {Appointment,AppointmentStatus} from '@/models/appointment.model';
+
+import {getAllAppointments,completeAppointment,cancelAppointment} from '@/data/repositories/appointment.repo';
+
 export type StatusFilter = 'all' | AppointmentStatus;
 
-
-export const allowedTransitions: Record<AppointmentStatus, AppointmentStatus[]> = {
+export const allowedTransitions: Record<
+  AppointmentStatus,
+  AppointmentStatus[]
+> = {
   upcoming: ['completed', 'cancelled'],
   completed: [],
   cancelled: [],
@@ -22,36 +26,86 @@ export function usePatientAppointments() {
     try {
       setLoading(true);
       setError(null);
-      setItems(await getAppointments());
-    } catch {
+
+      const appointments = await getAllAppointments();
+      setItems(appointments);
+    } catch (err) {
+      console.error('Failed to load appointments:', err);
       setError('Could not load appointments.');
     } finally {
       setLoading(false);
     }
   }, []);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      void load();
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [load]);
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
+
     return items.filter(
-      (a) =>
-        (filter === 'all' || a.status === filter) &&
-        (!q || a.patientId.toLowerCase().includes(q))
+      (appointment) =>
+        (filter === 'all' || appointment.status === filter) &&
+        (!q || appointment.patientId.toLowerCase().includes(q)),
     );
   }, [items, filter, query]);
 
-  const changeStatus = async (id: string, status: AppointmentStatus) => {
+  const changeStatus = async (
+    id: string,
+    status: AppointmentStatus,
+  ) => {
+    const appointment = items.find((item) => item.id === id);
+
+    if (!appointment) {
+      setError('Appointment not found.');
+      return;
+    }
+
+    if (!allowedTransitions[appointment.status].includes(status)) {
+      setError(
+        `Cannot change an appointment from ${appointment.status} to ${status}.`,
+      );
+      return;
+    }
+
     try {
       setUpdatingId(id);
-      const updated = await updateAppointmentStatus(id, status);
-      setItems((prev) => prev.map((a) => (a.id === id ? updated : a)));
-    } catch {
+      setError(null);
+
+      if (status === 'completed') {
+        await completeAppointment(id);
+      } else if (status === 'cancelled') {
+        await cancelAppointment(id);
+      } else {
+        return;
+      }
+
+      // Reload to reflect the updated repository status.
+      const appointments = await getAllAppointments();
+      setItems(appointments);
+    } catch (err) {
+      console.error('Failed to update appointment:', err);
       setError('Could not update the appointment.');
     } finally {
       setUpdatingId(null);
     }
   };
 
-  return { visible, filter, setFilter, query, setQuery, loading, error, reload: load, updatingId, changeStatus };
+  return {
+    visible,
+    filter,
+    setFilter,
+    query,
+    setQuery,
+    loading,
+    error,
+    reload: load,
+    updatingId,
+    changeStatus,
+  };
 }

@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Screen } from '@/components/ui/Screen';
 import { Header } from '@/components/ui/Header';
-import {Card, CardContent,CardHeader, CardTitle,CardDescription} from '@/components/ui/Card';
+import {Card, CardContent,CardHeader, CardTitle} from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';

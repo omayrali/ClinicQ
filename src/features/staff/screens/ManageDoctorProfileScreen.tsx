@@ -10,6 +10,7 @@ import { Text } from '@/components/ui/text';
 import { ScreenState } from '@/components/ui/ScreenState';
 import { colors } from '@/theme/tokens';
 import { useManageDoctorProfileViewModel } from '../viewmodels/useDoctorProfile';
+import { router } from 'expo-router';
 
 export default function ManageDoctorProfileScreen() {
   const {
@@ -237,25 +238,47 @@ export default function ManageDoctorProfileScreen() {
               </View>
 
           <View className="mt-2 gap-3">
-                <Button
-                  onPress={() => void saveChanges()}
-                  disabled={!hasChanges || saving}
-                >
-                  {saving ? (
-                    <Text>Saving...</Text>
-                  ) : (
-                    <>
-                      <Ionicons
-                        name="save-outline"
-                        size={18}
-                        color={colors.surface}
-                      />
-                      <Text className="ml-2">Save Changes</Text>
-                    </>
-                  )}
-                </Button>
-              </View>
-            </View>
+  <Button
+    onPress={() => void saveChanges()}
+    disabled={!hasChanges || saving}
+  >
+    {saving ? (
+      <Text>Saving...</Text>
+    ) : (
+      <>
+        <Ionicons
+          name="save-outline"
+          size={18}
+          color={colors.surface}
+        />
+        <Text className="ml-2">Save Changes</Text>
+      </>
+    )}
+  </Button>
+
+  <Button
+    variant="outline"
+    onPress={() => {
+      if (!selectedDoctor) return;
+
+      router.push({
+        pathname: '/(staff)/manage-doctor-schedule',
+        params: {
+          doctorId: selectedDoctor.id,
+        },
+      });
+    }}
+    disabled={!selectedDoctor}
+  >
+    <Ionicons
+      name="calendar-outline"
+      size={18}
+      color={colors.primary}
+    />
+    <Text className="ml-2">Manage Schedule</Text>
+  </Button>
+  </View>
+  </View>
           </CardContent>
         </Card>
       )}

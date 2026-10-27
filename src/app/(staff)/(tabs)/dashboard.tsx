@@ -1,11 +1,5 @@
-import { Text } from "@/components/ui/text";
-import { Header } from "@/components/ui/Header";
-import { Screen } from "@/components/ui/Screen";
+import StaffDashboardScreen from "@/features/staff/screens/StaffDashboardScreen";
 
 export default function StaffHome() {
-  return (
-    <Screen header={<Header title="Home" showBack={false} />} edges={["top"]}>
-      <Text className="pt-md">Home screen</Text>
-    </Screen>
-  );
-}
+  return <StaffDashboardScreen/>;
+  }

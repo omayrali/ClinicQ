@@ -55,6 +55,12 @@ export async function getAppointmentById(id: string): Promise<Appointment> {
   return { ...findAppointment(id) };
 }
 
+
+export async function getAllAppointments(): Promise<Appointment[]> {
+  return [...appointments].map((appointments) => ({ ...appointments }));
+}
+
+
 export async function bookAppointment(
   patientId: string,
   slotId: string,

@@ -1,8 +1,13 @@
 
 import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'expo-router';
 
-import { getDoctors } from '@/data/repositories/doctor.repo';
+import { useSession } from '@/context/SessionContext';
+import { getDoctorByClinicId, getDoctors } from '@/data/repositories/doctor.repo';
+import { getClinicById } from '@/data/repositories/clinic.repo';
 import { getAllAppointments } from '@/data/repositories/appointment.repo';
+import type { Clinic } from '@/models/clinic.model';
+import type { Doctor } from '@/models/doctor.model';
 
 type DashboardStats = {
   doctorsManaged: number;
@@ -17,7 +22,11 @@ const initialStats: DashboardStats = {
 };
 
 export function useStaffDashboardViewModel() {
+  const router = useRouter();
+  const clinicId = useSession().user?.clinicId;
   const [stats, setStats] = useState<DashboardStats>(initialStats);
+  const [doctor, setDoctor] = useState<Doctor | null>(null);
+  const [clinic, setClinic] = useState<Clinic | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,6 +39,11 @@ export function useStaffDashboardViewModel() {
         getDoctors(),
         getAllAppointments(),
       ]);
+
+      if (clinicId) {
+        setDoctor(await getDoctorByClinicId(clinicId));
+        setClinic(await getClinicById(clinicId));
+      }
 
       setStats({
         doctorsManaged: doctors.length,
@@ -46,9 +60,13 @@ export function useStaffDashboardViewModel() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [clinicId]);
 
-  
+  function openDoctorProfile() {
+    router.navigate('/doctor-profile');
+  }
+
+
 
 useEffect(() => {
   const timer = setTimeout(() => {
@@ -61,6 +79,9 @@ useEffect(() => {
 
   return {
     stats,
+    doctor,
+    clinic,
+    openDoctorProfile,
     loading,
     error,
     reload: loadDashboard,

@@ -22,15 +22,6 @@ export default function StaffTabs() {
         }}
       />
       <Tabs.Screen
-        name="clinic"
-        options={{
-          title: "ClinicQ",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="business-outline" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="appointments"
         options={{
           title: "Appointments",

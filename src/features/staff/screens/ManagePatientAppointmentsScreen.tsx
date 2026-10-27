@@ -1,24 +1,21 @@
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { ActivityIndicator, Pressable, View } from "react-native";
 
-import { View, Pressable, ActivityIndicator } from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { Card, CardContent } from "@/components/ui/Card";
+import { Header } from "@/components/ui/Header";
+import { Input } from "@/components/ui/Input";
+import { Screen } from "@/components/ui/Screen";
+import { ScreenState } from "@/components/ui/ScreenState";
+import { Button } from "@/components/ui/button";
+import { Text } from "@/components/ui/text";
+import { colors } from "@/theme/tokens";
 
-import { Screen } from '@/components/ui/Screen';
-import { Header } from '@/components/ui/Header';
-import { Card, CardContent } from '@/components/ui/Card';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/button';
-import { Text } from '@/components/ui/text';
-import { ScreenState } from '@/components/ui/ScreenState';
-import { colors } from '@/theme/tokens';
+import {
+  usePatientAppointments,
+  type StatusFilter,
+} from "../viewmodels/usePatientAppointments";
 
-import {usePatientAppointments, type StatusFilter,} from '../viewmodels/usePatientAppointments';
-
-const filters: StatusFilter[] = [
-  'all',
-  'upcoming',
-  'completed',
-  'cancelled',
-];
+const filters: StatusFilter[] = ["all", "upcoming", "completed", "cancelled"];
 
 function formatStatus(status: string) {
   return status.charAt(0).toUpperCase() + status.slice(1);
@@ -26,9 +23,9 @@ function formatStatus(status: string) {
 
 function statusColor(status: string) {
   switch (status) {
-    case 'completed':
+    case "completed":
       return colors.success;
-    case 'cancelled':
+    case "cancelled":
       return colors.danger;
     default:
       return colors.primary;
@@ -51,7 +48,7 @@ export default function PatientAppointmentsScreen() {
 
   return (
     <Screen scroll>
-      <Header title="Patient Appointments" />
+      <Header title="Patient Appointments" showBack={false} />
       <View className="mb-10 mt-4">
         <Input
           value={query}
@@ -71,15 +68,15 @@ export default function PatientAppointmentsScreen() {
               onPress={() => setFilter(item)}
               className={`rounded-full border px-4 py-2 ${
                 selected
-                  ? 'border-primary bg-primary'
-                  : 'border-border bg-surface'
+                  ? "border-primary bg-primary"
+                  : "border-border bg-surface"
               }`}
             >
               <Text
                 className={
                   selected
-                    ? 'font-medium text-primary-foreground'
-                    : 'text-foreground'
+                    ? "font-medium text-primary-foreground"
+                    : "text-foreground"
                 }
               >
                 {formatStatus(item)}
@@ -90,10 +87,7 @@ export default function PatientAppointmentsScreen() {
       </View>
 
       {loading ? (
-        <ScreenState
-          type="loading"
-          message="Loading patient appointments..."
-        />
+        <ScreenState type="loading" message="Loading patient appointments..." />
       ) : error ? (
         <ScreenState
           type="error"
@@ -115,12 +109,12 @@ export default function PatientAppointmentsScreen() {
         <View className="gap-3">
           <Text className="mb-1 text-sm text-muted-foreground">
             {visible.length} appointment
-            {visible.length === 1 ? '' : 's'} found
+            {visible.length === 1 ? "" : "s"} found
           </Text>
 
           {visible.map((appointment) => {
             const isUpdating = updatingId === appointment.id;
-            const canUpdate = appointment.status === 'upcoming';
+            const canUpdate = appointment.status === "upcoming";
 
             return (
               <Card key={appointment.id}>
@@ -167,10 +161,7 @@ export default function PatientAppointmentsScreen() {
                       <View className="flex-1">
                         <Button
                           onPress={() =>
-                            void changeStatus(
-                              appointment.id,
-                              'completed',
-                            )
+                            void changeStatus(appointment.id, "completed")
                           }
                           disabled={isUpdating}
                         >
@@ -189,10 +180,7 @@ export default function PatientAppointmentsScreen() {
                         <Button
                           variant="outline"
                           onPress={() =>
-                            void changeStatus(
-                              appointment.id,
-                              'cancelled',
-                            )
+                            void changeStatus(appointment.id, "cancelled")
                           }
                           disabled={isUpdating}
                         >
@@ -208,16 +196,8 @@ export default function PatientAppointmentsScreen() {
         </View>
       )}
 
-      <Button
-        variant="outline"
-        onPress={reload}
-        className="mt-5"
-      >
-        <Ionicons
-          name="refresh-outline"
-          size={18}
-          color={colors.primary}
-        />
+      <Button variant="outline" onPress={reload} className="mt-5">
+        <Ionicons name="refresh-outline" size={18} color={colors.primary} />
         <Text className="ml-2">Refresh Appointments</Text>
       </Button>
     </Screen>

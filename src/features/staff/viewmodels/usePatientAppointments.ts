@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Alert } from 'react-native';
 import type {Appointment,AppointmentStatus} from '@/models/appointment.model';
 
 import {getAllAppointments,completeAppointment,cancelAppointment} from '@/data/repositories/appointment.repo';
@@ -96,6 +97,23 @@ export function usePatientAppointments() {
     }
   };
 
+  const confirmChangeStatus = (id: string, status: AppointmentStatus) => {
+    const action = status === 'completed' ? 'complete' : 'cancel';
+
+    Alert.alert(
+      `${status === 'completed' ? 'Complete' : 'Cancel'} appointment`,
+      `Are you sure you want to ${action} this appointment?`,
+      [
+        { text: 'Back', style: 'cancel' },
+        {
+          text: 'Confirm',
+          style: 'destructive',
+          onPress: () => void changeStatus(id, status),
+        },
+      ],
+    );
+  };
+
   return {
     visible,
     filter,
@@ -106,6 +124,6 @@ export function usePatientAppointments() {
     error,
     reload: load,
     updatingId,
-    changeStatus,
+    changeStatus: confirmChangeStatus,
   };
 }

@@ -1,4 +1,5 @@
 import { useSession } from "@/context/SessionContext";
+import { createNotification } from "@/data/repositories/notification.repo";
 import { login, updateUser } from "@/data/repositories/user.repo";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -92,6 +93,14 @@ export function useEditProfile() {
         ...(values.password ? { password: values.password } : {}),
       });
       signIn(updated);
+      await createNotification({
+        userId: user.id,
+        type: "general",
+        title: "Profile updated",
+        message: values.password
+          ? "Your password has been changed"
+          : "Your profile details have changed.",
+      });
       Alert.alert("Profile updated", "Your changes have been saved.");
       router.back();
     } catch (e) {

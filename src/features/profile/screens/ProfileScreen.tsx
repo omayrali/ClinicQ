@@ -9,8 +9,14 @@ import { ProfileMenuItem } from "../components/ProfileMenuItem";
 import { useProfile } from "../viewmodels/useProfile";
 
 export function ProfileScreen() {
-  const { user, openAppointments, openNotifications, openTerms, logout } =
-    useProfile();
+  const {
+    user,
+    openAppointments,
+    openNotifications,
+    openTerms,
+    openEditProfile,
+    logout,
+  } = useProfile();
 
   if (!user) return null;
 
@@ -36,6 +42,11 @@ export function ProfileScreen() {
         </Card>
 
         <View className="gap-sm">
+          <ProfileMenuItem
+            icon="create-outline"
+            label="Edit Profile"
+            onPress={openEditProfile}
+          />
           <ProfileMenuItem
             icon="calendar-outline"
             label="My Appointments"

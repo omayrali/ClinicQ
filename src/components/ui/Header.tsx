@@ -9,10 +9,11 @@ import { View } from "react-native";
 type HeaderProps = {
   title: string;
   showBack?: boolean;
+  onBack?: () => void;
   right?: ReactNode;
 };
 
-export function Header({ title, showBack, right }: HeaderProps) {
+export function Header({ title, showBack, onBack, right }: HeaderProps) {
   const router = useRouter();
   const canGoBack = showBack ?? router.canGoBack();
 
@@ -26,7 +27,7 @@ export function Header({ title, showBack, right }: HeaderProps) {
             className="rounded-full"
             accessibilityLabel="Go back"
             hitSlop={8}
-            onPress={() => router.back()}
+            onPress={onBack ?? (() => router.back())}
           >
             <Ionicons name="chevron-back" size={20} color={colors.text} />
           </Button>
